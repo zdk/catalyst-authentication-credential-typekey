@@ -1,0 +1,1 @@
+* TypeKey for Catalyst::Authentication::Credential
