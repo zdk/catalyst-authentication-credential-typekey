@@ -7,7 +7,7 @@ use namespace::autoclean;
 
 our $VERSION = '0.001';
 
-has [qw/ key_cache version skip_expiry_check auth_store key_url /] => (
+has [qw/ key_cache version skip_expiry_check key_url /] => (
     isa      => NonEmptySimpleStr,
     is       => 'ro',
     required => 1
@@ -57,12 +57,14 @@ sub authenticate {
     my ( $self, $c, $realm, $auth_info ) = @_;
 
     my $res = $self->_authen_typekey->verify( $c->req );
+
     if (! $res ) {
         $c->log->debug( $self->_authen_typekey->errstr ) if $c->debug;
         return;
     }
 
-    my $user =  $realm->find_user( { email => $auth_info->{email}, }, $c );
+    return unless $auth_info;
+    my $user =  $realm->find_user( $auth_info, $c );
     unless ( $user ) {
         $c->log->error("Authenticated user, but could not locate in our Store!");
         return;
@@ -133,6 +135,8 @@ L<Authen::TypeKey>, L<Catalyst>, L<Catalyst::Plugin::Authentication>.
 =head1 AUTHOR
 
 zdk ( Warachet Samtalee )
+
+The idea was from https://github.com/omega/catalyst-authentication-credential-typekey
 
 =head1 LICENSE
 
