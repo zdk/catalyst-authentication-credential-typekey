@@ -31,47 +31,6 @@ sub _build__authen_typekey {
     return $tk;
 }
 
-=head2 BUILDARGS
-
-Extracts from the authentication config
-
-=cut
-
-sub BUILDARGS {
-    my ( $class, $config, $app, $realm ) = @_;
-    unless ( $config->{version} and $config->{key_url} ) {
-        Catalyst::Exception->throw(
-            __PACKAGE__ . " credential for realm " . $realm->name . " missing version and key_url"
-        );
-    }
-    return $config;
-}
-
-=head2 authenticate
-
-Standard authentication method
-
-=cut
-
-sub authenticate {
-    my ( $self, $c, $realm, $auth_info ) = @_;
-
-    my $res = $self->_authen_typekey->verify( $c->req );
-
-    if (! $res ) {
-        $c->log->debug( $self->_authen_typekey->errstr ) if $c->debug;
-        return;
-    }
-
-    return unless $auth_info;
-    my $user =  $realm->find_user( $auth_info, $c );
-    unless ( $user ) {
-        $c->log->error("Authenticated user, but could not locate in our Store!");
-        return;
-    }
-    return $user;
-}
-
 =head1 NAME
 
 Catalyst::Authentication::Credential::TypeKey - TypeKey authentication
@@ -144,6 +103,48 @@ This library is free software . You can redistribute it and/or modify it under
 the same terms as perl itself.
 
 =cut
+
+
+=head2 BUILDARGS
+
+Extracts from the authentication config
+
+=cut
+
+sub BUILDARGS {
+    my ( $class, $config, $app, $realm ) = @_;
+    unless ( $config->{version} and $config->{key_url} ) {
+        Catalyst::Exception->throw(
+            __PACKAGE__ . " credential for realm " . $realm->name . " missing version and key_url"
+        );
+    }
+    return $config;
+}
+
+=head2 authenticate
+
+Standard authentication method
+
+=cut
+
+sub authenticate {
+    my ( $self, $c, $realm, $auth_info ) = @_;
+
+    my $res = $self->_authen_typekey->verify( $c->req );
+
+    if (! $res ) {
+        $c->log->debug( $self->_authen_typekey->errstr ) if $c->debug;
+        return;
+    }
+
+    return unless $auth_info;
+    my $user =  $realm->find_user( $auth_info, $c );
+    unless ( $user ) {
+        $c->log->error("Authenticated user, but could not locate in our Store!");
+        return;
+    }
+    return $user;
+}
 
 __PACKAGE__->meta->make_immutable;
 1;
