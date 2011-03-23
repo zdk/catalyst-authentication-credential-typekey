@@ -5,7 +5,7 @@ use Moose;
 use MooseX::Types::Common::String qw/ NonEmptySimpleStr SimpleStr/;
 use namespace::autoclean;
 
-our $VERSION = '0.001';
+our $VERSION = '0.002';
 
 has [qw/ key_cache version skip_expiry_check key_url /] => (
     isa      => NonEmptySimpleStr,
