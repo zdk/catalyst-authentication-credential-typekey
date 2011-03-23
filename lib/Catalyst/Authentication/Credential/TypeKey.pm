@@ -34,10 +34,11 @@ sub _build__authen_typekey {
 =head1 NAME
 
 Catalyst::Authentication::Credential::TypeKey - TypeKey authentication
+(in new Catalyst Authentication )
 
 =head1 VERSION
 
-Version 0.001
+Version 0.003
 
 =head1 SYNOPSIS
 

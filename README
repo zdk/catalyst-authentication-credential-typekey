@@ -1,8 +1,9 @@
 NAME
     Catalyst::Authentication::Credential::TypeKey - TypeKey authentication
+    (in new Catalyst Authentication )
 
 VERSION
-    Version 0.001
+    Version 0.003
 
 SYNOPSIS
     Authenticate Catalyst apps with TypeKey system.
