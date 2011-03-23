@@ -5,7 +5,7 @@ use Moose;
 use MooseX::Types::Common::String qw/ NonEmptySimpleStr SimpleStr/;
 use namespace::autoclean;
 
-our $VERSION = '0.002';
+our $VERSION = '0.003';
 
 has [qw/ key_cache version skip_expiry_check key_url /] => (
     isa      => NonEmptySimpleStr,
@@ -137,10 +137,17 @@ sub authenticate {
         return;
     }
 
+    my $auth_store = $c->default_auth_store( );
+
+    $c->log->info('Authenticated store: ' . $c->get_auth_store_name( $auth_store ) )
+        if ( $c->debug );
+
+    $c->model( $auth_store->{config}->{user_class} )->find_or_create( $auth_info );
+
     return unless $auth_info;
     my $user =  $realm->find_user( $auth_info, $c );
     unless ( $user ) {
-        $c->log->error("Authenticated user, but could not locate in our Store!");
+        $c->log->error('Authenticated user, but could not locate in our Store!');
         return;
     }
     return $user;
