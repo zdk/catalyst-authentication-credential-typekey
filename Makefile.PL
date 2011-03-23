@@ -7,6 +7,9 @@ use Module::Install::AuthorTests;
 name 'Catalyst-Authentication-Credential-TypeKey';
 all_from 'lib/Catalyst/Authentication/Credential/TypeKey.pm';
 
+requires 'Module::Install::AuthorRequires';
+requires 'Module::Install::AuthorTests';
+
 requires 'Catalyst::Exception';
 requires 'Authen::TypeKey';
 requires 'Moose';
