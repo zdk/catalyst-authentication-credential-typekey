@@ -59,9 +59,6 @@ LICENSE
     This library is free software . You can redistribute it and/or modify it
     under the same terms as perl itself.
 
-  BUILDARGS
-    Extracts from the authentication config
-
   authenticate
     Standard authentication method
 
