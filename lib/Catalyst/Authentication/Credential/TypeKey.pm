@@ -31,6 +31,16 @@ sub _build__authen_typekey {
     return $tk;
 }
 
+sub BUILDARGS {
+    my ( $class, $config, $app, $realm ) = @_;
+    unless ( $config->{version} and $config->{key_url} ) {
+        Catalyst::Exception->throw(
+            __PACKAGE__ . " credential for realm " . $realm->name . " missing version and key_url"
+        );
+    }
+    return $config;
+}
+
 =head1 NAME
 
 Catalyst::Authentication::Credential::TypeKey - TypeKey authentication
@@ -105,22 +115,6 @@ the same terms as perl itself.
 
 =cut
 
-
-=head2 BUILDARGS
-
-Extracts from the authentication config
-
-=cut
-
-sub BUILDARGS {
-    my ( $class, $config, $app, $realm ) = @_;
-    unless ( $config->{version} and $config->{key_url} ) {
-        Catalyst::Exception->throw(
-            __PACKAGE__ . " credential for realm " . $realm->name . " missing version and key_url"
-        );
-    }
-    return $config;
-}
 
 =head2 authenticate
 
