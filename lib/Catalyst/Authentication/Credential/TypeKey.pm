@@ -132,12 +132,7 @@ sub authenticate {
         return;
     }
 
-    my $auth_store = $c->default_auth_store( );
-
-    $c->log->info('Authenticated store: ' . $c->get_auth_store_name( $auth_store ) )
-        if ( $c->debug );
-
-    $c->model( $auth_store->{config}->{user_class} )->find_or_create( $auth_info );
+    $c->model( $realm->{store}->{config}->{user_class} )->find_or_create( $auth_info );
 
     return unless $auth_info;
     my $user =  $realm->find_user( $auth_info, $c );
