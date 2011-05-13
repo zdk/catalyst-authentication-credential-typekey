@@ -3,7 +3,7 @@ NAME
     (in new Catalyst Authentication )
 
 VERSION
-    Version 0.003
+    Version 0.004
 
 SYNOPSIS
     Authenticate Catalyst apps with TypeKey system.

@@ -5,7 +5,7 @@ use Moose;
 use MooseX::Types::Common::String qw/ NonEmptySimpleStr SimpleStr/;
 use namespace::autoclean;
 
-our $VERSION = '0.003';
+our $VERSION = '0.004';
 
 has [qw/ key_cache version skip_expiry_check key_url /] => (
     isa      => NonEmptySimpleStr,
@@ -48,7 +48,7 @@ Catalyst::Authentication::Credential::TypeKey - TypeKey authentication
 
 =head1 VERSION
 
-Version 0.003
+Version 0.004
 
 =head1 SYNOPSIS
 
