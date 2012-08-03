@@ -24,5 +24,4 @@ if ($Module::Install::AUTHOR) {
         and die;
 }
 
-auto_install;
 WriteAll();
