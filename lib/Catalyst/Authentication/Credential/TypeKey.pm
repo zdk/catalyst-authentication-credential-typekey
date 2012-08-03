@@ -5,12 +5,18 @@ use Moose;
 use MooseX::Types::Common::String qw/ NonEmptySimpleStr SimpleStr/;
 use namespace::autoclean;
 
-our $VERSION = '0.004';
+our $VERSION = '0.005';
 
-has [qw/ key_cache version skip_expiry_check key_url /] => (
+has [qw/ key_url version /] => (
     isa      => NonEmptySimpleStr,
     is       => 'ro',
-    required => 1
+    required => 1,
+);
+
+has [qw/ key_cache skip_expiry_check /] => (
+    isa      => NonEmptySimpleStr,
+    is       => 'ro',
+    required => 0,
 );
 
 has _authen_typekey => (
@@ -22,12 +28,11 @@ has _authen_typekey => (
 
 sub _build__authen_typekey {
     my ( $self ) = @_;
-
-    my $tk = Authen::TypeKey->new;
-    $tk->version( $self->version );
-    $tk->key_cache( $self->key_cache );
-    $tk->skip_expiry_check( $self->skip_expiry_check );
-    $tk->key_url( $self->key_url );
+    my $tk = Authen::TypeKey->new();
+    foreach my $name ( 'key_url', 'version',
+                       'key_cache', 'skip_expiry_check' ) {
+        $tk->$name( $self->$name ) if $self->$name;
+    }
     return $tk;
 }
 
@@ -48,7 +53,7 @@ Catalyst::Authentication::Credential::TypeKey - TypeKey authentication
 
 =head1 VERSION
 
-Version 0.004
+Version 0.005
 
 =head1 SYNOPSIS
 
@@ -104,7 +109,7 @@ L<Authen::TypeKey>, L<Catalyst>, L<Catalyst::Plugin::Authentication>.
 
 =head1 AUTHOR
 
-zdk ( Warachet Samtalee )
+zdk
 
 The idea was from https://github.com/omega/catalyst-authentication-credential-typekey
 

@@ -8,11 +8,11 @@ __PACKAGE__->config( namespace => '' );
 
 sub auto : Private {
     my ($self, $c) = @_;
-    $c->authenticate();
+    #$c->authenticate(); TODO: Put a valid signature here
 }
 sub moose : Local {
     my ( $self, $c ) = @_;
-    $c->res->body( $c->user->id );
+    $c->res->body( $c->user );
 }
 
 1;
